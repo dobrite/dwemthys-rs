@@ -37,7 +37,6 @@ fn main() {
                 if char_y < (con_y - 1) {
                     char_y += 1;
                 }
-                println!("{}", char_y);
             },
             Special(key_code::Left) => {
                 if char_x >= 1 {
