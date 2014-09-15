@@ -1,0 +1,12 @@
+[root]
+name = "dwemthys"
+version = "0.0.1"
+dependencies = [
+ "tcod 0.1.0 (git+https://github.com/tomassedovic/tcod-rs.git#d9bf93af213d50bc1256006a0f3e52c1e28e8dce)",
+]
+
+[[package]]
+name = "tcod"
+version = "0.1.0"
+source = "git+https://github.com/tomassedovic/tcod-rs.git#d9bf93af213d50bc1256006a0f3e52c1e28e8dce"
+
