@@ -11,17 +11,19 @@ use tcod::{Console, background_flag, key_code, Special};
 use std::rand::Rng;
 
 
-fn render(con: &mut Console, objs: &Vec<Box<Updates>>) {
+fn render(con: &mut Console, objs: &Vec<Box<Updates>>, c: Character) {
     con.clear();
     for i in objs.iter() {
-        i.render(con)
+        i.render(con);
     }
+    c.render(con);
     con.flush();
 }
 
-fn update(objs: &mut Vec<Box<Updates>>, keypress: tcod::KeyState, game: Game) {
-    for i in objs.mut_iter() {
-        i.update(keypress, game);
+fn update(npcs: &mut Vec<Box<Updates>>, c: &mut Character, keypress: tcod::KeyState, game: Game) {
+    c.update(keypress, game);
+    for i in npcs.mut_iter() {
+        i.update(game);
     }
 }
 
@@ -34,12 +36,13 @@ fn main() {
         false
     );
 
-    let mut c = box Character::new(40i32, 25i32, '@') as Box<Updates>;
+    let mut c = Character::new(40i32, 25i32, '@');
     let mut d = box NPC::new(10i32, 10i32, 'd') as Box<Updates>;
+    let mut ct = box NPC::new(40, 25, 'c') as Box<Updates>;
 
-    let mut objs: Vec<Box<Updates>> = vec![c, d];
+    let mut npcs: Vec<Box<Updates>> = vec![d, ct];
 
-    render(&mut con, &objs);
+    render(&mut con, &npcs, c);
 
     while !(Console::window_closed() || game.exit) {
         let keypress = con.wait_for_keypress(true);
@@ -48,8 +51,8 @@ fn main() {
             _                         => {}
         }
 
-        update(&mut objs, keypress, game);
+        update(&mut npcs, &mut c, keypress, game);
 
-        render(&mut con, &objs);
+        render(&mut con, &npcs, c);
     }
 }
