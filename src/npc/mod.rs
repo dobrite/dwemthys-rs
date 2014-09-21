@@ -1,9 +1,9 @@
 extern crate tcod;
-use self::tcod::{Console, background_flag};
 
 use traits::Updates;
 use util::{Point, DoesContain, DoesNotContain};
 use game::Game;
+use rendering::TcodRenderingComponent;
 
 use std;
 use std::rand::Rng;
@@ -34,7 +34,7 @@ impl Updates for NPC {
         }
     }
 
-    fn render(&self, console: &mut Console) {
-        console.put_char(self.position.x as int, self.position.y as int, self.display_char, background_flag::Set);
+    fn render(&self, rendering_component: &mut TcodRenderingComponent) {
+        rendering_component.render_object(self.position, self.display_char);
     }
 }

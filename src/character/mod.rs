@@ -1,7 +1,8 @@
 extern crate tcod;
-use self::tcod::{Console, background_flag, key_code, Special};
+use self::tcod::{key_code, Special};
 
 use util::{Point, DoesContain, DoesNotContain};
+use rendering::TcodRenderingComponent;
 use game::Game;
 
 pub struct Character {
@@ -39,7 +40,7 @@ impl Character {
         }
     }
 
-    pub fn render(&self, console: &mut Console) {
-        console.put_char(self.position.x as int, self.position.y as int, self.display_char, background_flag::Set);
+    pub fn render(&self, rendering_component: &mut TcodRenderingComponent) {
+        rendering_component.render_object(self.position, self.display_char);
     }
 }
