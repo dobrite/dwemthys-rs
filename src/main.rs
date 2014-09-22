@@ -3,7 +3,7 @@ extern crate dwemthys;
 
 use dwemthys::util::{Point, Bound};
 use dwemthys::game::Game;
-use dwemthys::traits::Updates;
+use dwemthys::traits::{Updates, RenderingComponent};
 use dwemthys::character::Character;
 use dwemthys::npc::NPC;
 use dwemthys::rendering::TcodRenderingComponent;
@@ -27,15 +27,12 @@ fn update(npcs: &mut Vec<Box<Updates>>, c: &mut Character, keypress: tcod::KeySt
 }
 
 fn main() {
-    let mut game = Game { exit: false, window_bounds: Bound { min: Point { x: 0, y: 0 }, max: Point { x: 79, y: 49 } } };
     let con = Console::init_root(
         (game.window_bounds.max.x + 1) as int,
         (game.window_bounds.max.y + 1) as int,
         "libtcod Rust tutorial",
         false
     );
-
-    let mut rendering_component = TcodRenderingComponent { console: con };
 
     let mut c = Character::new(40i32, 25i32, '@');
     let d  = box NPC::new(10i32, 10i32, 'd') as Box<Updates>;
