@@ -21,7 +21,8 @@ fn main() {
     game.render(&npcs, c);
 
     while !(Console::window_closed() || game.exit) {
-        let keypress = game.rendering_component.wait_for_keypress();
+        let keypress = game.wait_for_keypress();
+
         match keypress.key {
             Special(key_code::Escape) => game.exit = true,
             _                         => {}

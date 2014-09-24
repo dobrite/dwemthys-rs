@@ -1,5 +1,7 @@
 extern crate tcod;
 
+use self::tcod::{KeyState};
+
 use util::{Point, Bound};
 use rendering::{TcodRenderingComponent, RenderingComponent};
 use traits::Updates;
@@ -41,5 +43,9 @@ impl Game {
         for i in npcs.mut_iter() {
             i.update(self);
         }
+    }
+
+    pub fn wait_for_keypress(&mut self) -> KeyState {
+        self.rendering_component.wait_for_keypress()
     }
 }
