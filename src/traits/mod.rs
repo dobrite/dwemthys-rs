@@ -1,12 +1,12 @@
 extern crate tcod;
 
 use game::Game;
-use rendering::TcodRenderingComponent;
+use rendering::RenderingComponent;
 use util::{Point};
 use self::tcod::{Console, background_flag, KeyState};
 
 pub trait Updates {
-    fn update(&mut self, Game);
-    fn render(&self, &mut TcodRenderingComponent);
+    fn update(&mut self, &Game);
+    fn render(&self, &mut RenderingComponent);
 }
 

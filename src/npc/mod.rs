@@ -3,7 +3,7 @@ extern crate tcod;
 use traits::Updates;
 use util::{Point, DoesContain, DoesNotContain};
 use game::Game;
-use rendering::TcodRenderingComponent;
+use rendering::RenderingComponent;
 
 use std;
 use std::rand::Rng;
@@ -20,7 +20,7 @@ impl NPC {
 }
 
 impl Updates for NPC {
-    fn update(&mut self, game: Game) {
+    fn update(&mut self, game: &Game) {
         let offset_x = std::rand::task_rng().gen_range(0, 3i32) - 1;
         match game.window_bounds.contains(self.position.offset_x(offset_x)) {
             DoesContain    => self.position = self.position.offset_x(offset_x),
@@ -34,7 +34,7 @@ impl Updates for NPC {
         }
     }
 
-    fn render(&self, rendering_component: &mut TcodRenderingComponent) {
+    fn render(&self, rendering_component: &mut RenderingComponent) {
         rendering_component.render_object(self.position, self.display_char);
     }
 }

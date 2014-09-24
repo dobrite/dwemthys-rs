@@ -3,10 +3,10 @@ extern crate dwemthys;
 
 use dwemthys::util::{Point, Bound};
 use dwemthys::game::Game;
-use dwemthys::traits::{Updates, RenderingComponent};
+use dwemthys::traits::{Updates};
 use dwemthys::character::Character;
 use dwemthys::npc::NPC;
-use dwemthys::rendering::TcodRenderingComponent;
+use dwemthys::rendering::RenderingComponent;
 
 use tcod::{Console, key_code, Special};
 
@@ -18,17 +18,17 @@ fn main() {
 
     let mut npcs: Vec<Box<Updates>> = vec![d, ct];
 
-    render(&mut rendering_component, &npcs, c);
+    game.render(&npcs, c);
 
     while !(Console::window_closed() || game.exit) {
-        let keypress = rendering_component.wait_for_keypress();
+        let keypress = game.rendering_component.wait_for_keypress();
         match keypress.key {
             Special(key_code::Escape) => game.exit = true,
             _                         => {}
         }
 
-        update(&mut npcs, &mut c, keypress, game);
+        game.update(&mut npcs, &mut c, keypress);
 
-        render(&mut rendering_component, &npcs, c);
+        game.render(&npcs, c);
     }
 }

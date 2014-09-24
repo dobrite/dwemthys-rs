@@ -8,7 +8,7 @@ use character::Character;
 pub struct Game {
     pub exit:           bool,
     pub window_bounds: Bound,
-    pub rendering_component: Box<RenderingComponent>
+    pub rendering_component: Box<RenderingComponent + 'static>
 }
 
 impl Game {
@@ -27,16 +27,16 @@ impl Game {
         }
     }
 
-    fn render(&mut self, npcs: &Vec<Box<Updates>>, c: Character) {
+    pub fn render(&mut self, npcs: &Vec<Box<Updates>>, c: Character) {
         self.rendering_component.before_render_new_frame();
         for i in npcs.iter() {
-            i.render(self.rendering_component);
+            i.render(&mut *self.rendering_component);
         }
-        c.render(self.rendering_component);
+        c.render(&mut *self.rendering_component);
         self.rendering_component.after_render_new_frame();
     }
 
-    fn update(&mut self, npcs: &mut Vec<Box<Updates>>, c: &mut Character, keypress: tcod::KeyState, game: Game) {
+    pub fn update(&self, npcs: &mut Vec<Box<Updates>>, c: &mut Character, keypress: tcod::KeyState) {
         c.update(keypress, self);
         for i in npcs.mut_iter() {
             i.update(self);
