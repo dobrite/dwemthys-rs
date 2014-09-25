@@ -1,4 +1,5 @@
 extern crate tcod;
+
 use self::tcod::{key_code, Special};
 
 use util::{Point, DoesContain, DoesNotContain};

@@ -41,7 +41,7 @@ impl Game {
     pub fn update(&self, npcs: &mut Vec<Box<Updates>>, c: &mut Character, keypress: tcod::KeyState) {
         c.update(keypress, self);
         for i in npcs.mut_iter() {
-            i.update(self);
+            i.update();
         }
     }
 

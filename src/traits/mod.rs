@@ -6,7 +6,7 @@ use util::{Point};
 use self::tcod::{Console, background_flag, KeyState};
 
 pub trait Updates {
-    fn update(&mut self, &Game);
+    fn update(&mut self);
     fn render(&self, &mut RenderingComponent);
 }
 

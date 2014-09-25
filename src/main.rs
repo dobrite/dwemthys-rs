@@ -6,15 +6,18 @@ use dwemthys::traits::Updates;
 use dwemthys::character::Character;
 use dwemthys::npc::NPC;
 use dwemthys::rendering::RenderingComponent;
+use dwemthys::movement::{MovementComponent, RandomMovementComponent};
 
 use tcod::{Console, key_code, Special};
 
 fn main() {
     let mut game = Game::new();
     let mut c = Character::new(40i32, 25i32, '@');
+    let cmc : Box<RandomMovementComponent> = box MovementComponent::new(game.window_bounds);
+    let dmc : Box<RandomMovementComponent> = box MovementComponent::new(game.window_bounds);
     let mut npcs: Vec<Box<Updates>> = vec![
-        box NPC::new(10i32, 10i32, 'd') as Box<Updates>,
-        box NPC::new(40i32, 25i32, 'c') as Box<Updates>,
+        box NPC::new(10i32, 10i32, 'd', dmc) as Box<Updates>,
+        box NPC::new(40i32, 25i32, 'c', cmc) as Box<Updates>,
     ];
 
     game.render(&npcs, c);
