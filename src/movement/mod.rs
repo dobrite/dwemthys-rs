@@ -14,6 +14,10 @@ pub struct RandomMovementComponent {
     window_bounds: Bound
 }
 
+pub struct TcodUserMovementComponent {
+    window_bounds: Bound
+}
+
 impl MovementComponent for RandomMovementComponent {
     fn new(bound: Bound) -> RandomMovementComponent {
         RandomMovementComponent { window_bounds: bound }
@@ -34,5 +38,40 @@ impl MovementComponent for RandomMovementComponent {
         }
 
         offset
+    }
+}
+
+impl MovementComponent for TcodUserMovementComponent {
+    fn new(bound: Bound) -> TcodUserMovementComponent {
+        TcodUserMovementComponent { window_bound: bound }
+    }
+
+    fn update(&self, point: Point) -> Point {
+        let mut offset = Point { x: point.x, y: point.y };
+        offset = match Game::get_last_keypress() {
+            Some(keypress) => {
+                match keypress.key {
+                    Special(key_code::Up) => {
+                        offset.offset_y(-1)
+                    },
+                    Special(key_code::Down) => {
+                        offset.offset_y(1)
+                    },
+                    Special(key_code::Left) => {
+                        offset.offset_x(-1)
+                    },
+                    Special(key_code::Right) => {
+                        offset.offset_x(1)
+                    },
+                    _ => { offset }
+                }
+            },
+            None => { offset }
+        };
+
+        match self.window_bounds.contains(offset) {
+            DoesContain => { offset }
+            DoesNotContain => { point }
+        }
     }
 }

@@ -7,6 +7,8 @@ use rendering::{TcodRenderingComponent, RenderingComponent};
 use traits::Updates;
 use character::Character;
 
+static mut LAST_KEYPRESS : Option<KeyState> = None;
+
 pub struct Game {
     pub exit:           bool,
     pub window_bounds: Bound,
@@ -14,6 +16,14 @@ pub struct Game {
 }
 
 impl Game {
+    pub fn get_last_key_press() -> Option<KeyState> {
+        unsafe { LAST_KEYPRESS }
+    }
+
+    pub fn set_last_keypress(ks: KeyState) {
+        unsafe { LAST_KEYPRESS = Some(ks); }
+    }
+
     pub fn new() -> Game {
         let bounds = Bound {
             min: Point { x: 0, y: 0 },
@@ -46,6 +56,8 @@ impl Game {
     }
 
     pub fn wait_for_keypress(&mut self) -> KeyState {
-        self.rendering_component.wait_for_keypress()
+        let ks = self.rendering_component.wait_for_keypress();
+        Game::set_last_keypress(ks);
+        return ks;
     }
 }
