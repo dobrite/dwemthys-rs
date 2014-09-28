@@ -4,25 +4,16 @@ extern crate dwemthys;
 use tcod::{Console, key_code, Special};
 
 use dwemthys::game::Game;
-use dwemthys::traits::Updates;
-use dwemthys::character::Character;
-use dwemthys::npc::NPC;
+use dwemthys::actor::Actor;
 use dwemthys::rendering::RenderingComponent;
-use dwemthys::movement::{
-    TcodUserMovementComponent,
-    MovementComponent,
-    RandomMovementComponent
-};
+use dwemthys::movement::MovementComponent;
 
 fn main() {
     let mut game = Game::new();
-    let char_mc : Box<TcodUserMovementComponent> = box MovementComponent::new(game.window_bounds);
-    let mut c = Character::new(40i32, 25i32, '@', char_mc);
-    let cmc : Box<RandomMovementComponent> = box MovementComponent::new(game.window_bounds);
-    let dmc : Box<RandomMovementComponent> = box MovementComponent::new(game.window_bounds);
-    let mut npcs: Vec<Box<Updates>> = vec![
-        box NPC::new(10i32, 10i32, 'd', dmc) as Box<Updates>,
-        box NPC::new(40i32, 25i32, 'c', cmc) as Box<Updates>,
+    let mut c = Actor::heroine(40i32, 25i32, game.window_bounds);
+    let mut npcs: Vec<Box<Actor>> = vec![
+        box Actor::dog(10i32, 10i32, game.window_bounds),
+        box Actor::cat(40i32, 25i32, game.window_bounds),
     ];
 
     game.render(&npcs, &c);
