@@ -8,11 +8,16 @@ use dwemthys::traits::Updates;
 use dwemthys::character::Character;
 use dwemthys::npc::NPC;
 use dwemthys::rendering::RenderingComponent;
-use dwemthys::movement::{MovementComponent, RandomMovementComponent};
+use dwemthys::movement::{
+    TcodUserMovementComponent,
+    MovementComponent,
+    RandomMovementComponent
+};
 
 fn main() {
     let mut game = Game::new();
-    let mut c = Character::new(40i32, 25i32, '@');
+    let char_mc : Box<TcodUserMovementComponent> = box MovementComponent::new(game.window_bounds);
+    let mut c = Character::new(40i32, 25i32, '@', char_mc);
     let cmc : Box<RandomMovementComponent> = box MovementComponent::new(game.window_bounds);
     let dmc : Box<RandomMovementComponent> = box MovementComponent::new(game.window_bounds);
     let mut npcs: Vec<Box<Updates>> = vec![
@@ -20,7 +25,7 @@ fn main() {
         box NPC::new(40i32, 25i32, 'c', cmc) as Box<Updates>,
     ];
 
-    game.render(&npcs, c);
+    game.render(&npcs, &c);
 
     while !(Console::window_closed() || game.exit) {
         let keypress = game.wait_for_keypress();
@@ -30,8 +35,8 @@ fn main() {
             _                         => {}
         }
 
-        game.update(&mut npcs, &mut c, keypress);
+        game.update(&mut npcs, &mut c);
 
-        game.render(&npcs, c);
+        game.render(&npcs, &c);
     }
 }

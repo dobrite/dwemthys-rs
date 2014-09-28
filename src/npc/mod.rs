@@ -1,8 +1,7 @@
 extern crate tcod;
 
 use traits::Updates;
-use util::{Point, DoesContain, DoesNotContain};
-use game::Game;
+use util::{Point};
 use rendering::RenderingComponent;
 use movement::MovementComponent;
 
