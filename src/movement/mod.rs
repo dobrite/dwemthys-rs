@@ -1,9 +1,12 @@
 extern crate tcod;
 
-use util::{Bound, Point, DoesContain, DoesNotContain};
-
 use std;
 use std::rand::Rng;
+
+use self::tcod::{Special, key_code};
+
+use util::{Bound, Point, DoesContain, DoesNotContain};
+use game::Game;
 
 pub trait MovementComponent {
     fn new(Bound) -> Self;
@@ -43,7 +46,7 @@ impl MovementComponent for RandomMovementComponent {
 
 impl MovementComponent for TcodUserMovementComponent {
     fn new(bound: Bound) -> TcodUserMovementComponent {
-        TcodUserMovementComponent { window_bound: bound }
+        TcodUserMovementComponent { window_bounds: bound }
     }
 
     fn update(&self, point: Point) -> Point {

@@ -1,14 +1,14 @@
 extern crate tcod;
 extern crate dwemthys;
 
+use tcod::{Console, key_code, Special};
+
 use dwemthys::game::Game;
 use dwemthys::traits::Updates;
 use dwemthys::character::Character;
 use dwemthys::npc::NPC;
 use dwemthys::rendering::RenderingComponent;
 use dwemthys::movement::{MovementComponent, RandomMovementComponent};
-
-use tcod::{Console, key_code, Special};
 
 fn main() {
     let mut game = Game::new();

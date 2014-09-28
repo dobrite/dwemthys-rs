@@ -16,7 +16,7 @@ pub struct Game {
 }
 
 impl Game {
-    pub fn get_last_key_press() -> Option<KeyState> {
+    pub fn get_last_keypress() -> Option<KeyState> {
         unsafe { LAST_KEYPRESS }
     }
 
