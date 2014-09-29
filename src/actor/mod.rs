@@ -1,5 +1,7 @@
 extern crate tcod;
 
+use game::Game;
+
 use util::{
     Point,
     Bound,
@@ -46,8 +48,14 @@ impl Actor {
         Actor::new(x, y, 'c', mc)
     }
 
-    pub fn heroine(x: i32, y: i32, bound: Bound) -> Actor {
+    pub fn kobold(x: i32, y: i32, bound: Bound) -> Actor {
+        let mc : Box<RandomMovementComponent> = box MovementComponent::new(bound);
+        Actor::new(x, y, 'k', mc)
+    }
+
+    pub fn heroine(bound: Bound) -> Actor {
+        let point = Game::get_character_point();
         let mc : Box<TcodUserMovementComponent> = box MovementComponent::new(bound);
-        Actor::new(x, y, '@', mc)
+        Actor::new(point.x, point.y, '@', mc)
     }
 }

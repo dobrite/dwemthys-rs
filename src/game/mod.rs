@@ -7,6 +7,7 @@ use rendering::{TcodRenderingComponent, RenderingComponent};
 use actor::Actor;
 
 static mut LAST_KEYPRESS : Option<KeyState> = None;
+static mut CHAR_LOCATION : Point = Point { x: 40, y: 25 };
 
 pub struct Game {
     pub exit:           bool,
@@ -21,6 +22,14 @@ impl Game {
 
     pub fn set_last_keypress(ks: KeyState) {
         unsafe { LAST_KEYPRESS = Some(ks); }
+    }
+
+    pub fn get_character_point() -> Point {
+        unsafe { CHAR_LOCATION }
+    }
+
+    pub fn set_character_point(point: Point) {
+        unsafe { CHAR_LOCATION = point; }
     }
 
     pub fn new() -> Game {
@@ -49,6 +58,7 @@ impl Game {
 
     pub fn update(&self, npcs: &mut Vec<Box<Actor>>, c: &mut Actor) {
         c.update();
+        Game::set_character_point(c.position);
         for i in npcs.iter_mut() {
             i.update();
         }

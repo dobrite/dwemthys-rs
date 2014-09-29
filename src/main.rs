@@ -10,7 +10,7 @@ use dwemthys::movement::MovementComponent;
 
 fn main() {
     let mut game = Game::new();
-    let mut c = Actor::heroine(40i32, 25i32, game.window_bounds);
+    let mut c = Actor::heroine(game.window_bounds);
     let mut npcs: Vec<Box<Actor>> = vec![
         box Actor::dog(10i32, 10i32, game.window_bounds),
         box Actor::cat(40i32, 25i32, game.window_bounds),

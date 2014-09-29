@@ -21,6 +21,10 @@ pub struct TcodUserMovementComponent {
     window_bounds: Bound
 }
 
+pub struct AggroMovementComponent {
+    window_bounds: Bound
+}
+
 impl MovementComponent for RandomMovementComponent {
     fn new(bound: Bound) -> RandomMovementComponent {
         RandomMovementComponent { window_bounds: bound }
@@ -76,5 +80,15 @@ impl MovementComponent for TcodUserMovementComponent {
             DoesContain => { offset }
             DoesNotContain => { point }
         }
+    }
+}
+
+impl MovementComponent for AggroMovementComponent {
+    fn new(bound: Bound) -> AggroMovementComponent {
+        AggroMovementComponent { window_bounds: bound }
+    }
+
+    fn update(&self, point: Point) -> Point {
+        point
     }
 }
