@@ -5,7 +5,21 @@ use std::rand::Rng;
 
 use self::tcod::{Special, key_code};
 
-use util::{Bound, Point, DoesContain, DoesNotContain};
+use util::{
+    Bound,
+    Point,
+    DoesContain,
+    DoesNotContain,
+    LeftOfPoint,
+    RightOfPoint,
+    OnPointX,
+    OnPointY,
+    AbovePoint,
+    BelowPoint,
+    PointsEqual,
+    PointsNotEqual
+};
+
 use game::Game;
 
 pub trait MovementComponent {
@@ -89,6 +103,29 @@ impl MovementComponent for AggroMovementComponent {
     }
 
     fn update(&self, point: Point) -> Point {
-        point
+        let char_point = Game::get_character_point();
+        let mut offset = Point { x: 0, y: 0 };
+
+        match point.compare_x(char_point) {
+            RightOfPoint => offset = offset.offset_x(-1),
+            LeftOfPoint  => offset = offset.offset_x(1),
+            OnPointX     => {}
+        }
+
+        match point.compare_y(char_point) {
+            BelowPoint => offset = offset.offset_y(-1),
+            AbovePoint => offset = offset.offset_y(1),
+            OnPointY   => {}
+        }
+
+        match point.offset(offset).compare(char_point) {
+            PointsEqual    => { return point; }
+            PointsNotEqual => {
+                match self.window_bounds.contains(point.offset(offset)) {
+                    DoesContain    => { return point.offset(offset); }
+                    DoesNotContain => { return point; }
+                }
+            }
+        }
     }
 }

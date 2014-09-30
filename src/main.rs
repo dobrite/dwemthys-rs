@@ -12,8 +12,9 @@ fn main() {
     let mut game = Game::new();
     let mut c = Actor::heroine(game.window_bounds);
     let mut npcs: Vec<Box<Actor>> = vec![
-        box Actor::dog(10i32, 10i32, game.window_bounds),
-        box Actor::cat(40i32, 25i32, game.window_bounds),
+        box Actor::dog(10i32, 10, game.window_bounds),
+        box Actor::cat(40i32, 25, game.window_bounds),
+        box Actor::kobold(20i32, 20, game.window_bounds),
     ];
 
     game.render(&npcs, &c);

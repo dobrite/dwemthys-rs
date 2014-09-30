@@ -13,6 +13,7 @@ use movement::{
     MovementComponent,
     TcodUserMovementComponent,
     RandomMovementComponent,
+    AggroMovementComponent,
 };
 
 pub struct Actor {
@@ -49,7 +50,7 @@ impl Actor {
     }
 
     pub fn kobold(x: i32, y: i32, bound: Bound) -> Actor {
-        let mc : Box<RandomMovementComponent> = box MovementComponent::new(bound);
+        let mc : Box<AggroMovementComponent> = box MovementComponent::new(bound);
         Actor::new(x, y, 'k', mc)
     }
 
